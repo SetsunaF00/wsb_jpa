@@ -79,7 +79,7 @@ ALTER TABLE visit
 ALTER TABLE medical_treatment
     ADD CONSTRAINT IF NOT EXISTS FK_MEDICAL_TREATMENT_ON_VISIT FOREIGN KEY (visit_id) REFERENCES visit (id);
 
--- Dodatkowe unikalności dla powiązań adresów
+
 ALTER TABLE doctor
     ADD CONSTRAINT IF NOT EXISTS uc_doctor_address UNIQUE (address_id);
 
