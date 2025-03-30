@@ -1,10 +1,7 @@
 package com.jpacourse.persistance.entity;
 
 import com.jpacourse.persistance.enums.Specialization;
-
 import jakarta.persistence.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,67 +30,37 @@ public class DoctorEntity {
 	@Enumerated(EnumType.STRING)
 	private Specialization specialization;
 
-	@OneToOne(cascade = {CascadeType.PERSIST})
-	@JoinColumn(name = "address_id")
-	private AddressEntity addressEntity;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
+	private AddressEntity address;
 
-	@OneToMany(mappedBy = "doctorEntity", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-	private List<VisitEntity> visits = new ArrayList<>();
+	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+	private List<VisitEntity> visits;
 
-	public Long getId() {
-		return id;
-	}
+	public Long getId() { return id; }
+	public void setId(Long id) { this.id = id; }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+	public String getFirstName() { return firstName; }
+	public void setFirstName(String firstName) { this.firstName = firstName; }
 
-	public String getFirstName() {
-		return firstName;
-	}
+	public String getLastName() { return lastName; }
+	public void setLastName(String lastName) { this.lastName = lastName; }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+	public String getTelephoneNumber() { return telephoneNumber; }
+	public void setTelephoneNumber(String telephoneNumber) { this.telephoneNumber = telephoneNumber; }
 
-	public String getLastName() {
-		return lastName;
-	}
+	public String getEmail() { return email; }
+	public void setEmail(String email) { this.email = email; }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+	public String getDoctorNumber() { return doctorNumber; }
+	public void setDoctorNumber(String doctorNumber) { this.doctorNumber = doctorNumber; }
 
-	public String getTelephoneNumber() {
-		return telephoneNumber;
-	}
+	public Specialization getSpecialization() { return specialization; }
+	public void setSpecialization(Specialization specialization) { this.specialization = specialization; }
 
-	public void setTelephoneNumber(String telephoneNumber) {
-		this.telephoneNumber = telephoneNumber;
-	}
+	public AddressEntity getAddress() { return address; }
+	public void setAddress(AddressEntity address) { this.address = address; }
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getDoctorNumber() {
-		return doctorNumber;
-	}
-
-	public void setDoctorNumber(String doctorNumber) {
-		this.doctorNumber = doctorNumber;
-	}
-
-	public Specialization getSpecialization() {
-		return specialization;
-	}
-
-	public void setSpecialization(Specialization specialization) {
-		this.specialization = specialization;
-	}
-
+	public List<VisitEntity> getVisits() { return visits; }
+	public void setVisits(List<VisitEntity> visits) { this.visits = visits; }
 }

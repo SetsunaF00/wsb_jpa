@@ -1,13 +1,8 @@
 package com.jpacourse.persistance.entity;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-
 import jakarta.persistence.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.query.sql.internal.ParameterRecognizerImpl;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "VISIT")
@@ -22,42 +17,32 @@ public class VisitEntity {
 	@Column(nullable = false)
 	private LocalDateTime time;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "patient_id")
-	private PatientEntity patientEntity;
+	@ManyToOne
+	@JoinColumn(name = "doctor_id", nullable = false)
+	private DoctorEntity doctor;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "doctor_id")
-	private DoctorEntity doctorEntity;
+	@ManyToOne
+	@JoinColumn(name = "patient_id", nullable = false)
+	private PatientEntity patient;
 
-	@Fetch(FetchMode.SELECT)
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "VISIT_ID")
-	private Collection<MedicalTreatmentEntity> medicalTreatmentEntities = new ArrayList<>();
+	@OneToMany(mappedBy = "visit", cascade = CascadeType.ALL)
+	private List<MedicalTreatmentEntity> treatments;
 
+	public Long getId() { return id; }
+	public void setId(Long id) { this.id = id; }
 
-	public Long getId() {
-		return id;
-	}
+	public String getDescription() { return description; }
+	public void setDescription(String description) { this.description = description; }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+	public LocalDateTime getTime() { return time; }
+	public void setTime(LocalDateTime time) { this.time = time; }
 
-	public String getDescription() {
-		return description;
-	}
+	public DoctorEntity getDoctor() { return doctor; }
+	public void setDoctor(DoctorEntity doctor) { this.doctor = doctor; }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+	public PatientEntity getPatient() { return patient; }
+	public void setPatient(PatientEntity patient) { this.patient = patient; }
 
-	public LocalDateTime getTime() {
-		return time;
-	}
-
-	public void setTime(LocalDateTime time) {
-		this.time = time;
-	}
-
+	public List<MedicalTreatmentEntity> getTreatments() { return treatments; }
+	public void setTreatments(List<MedicalTreatmentEntity> treatments) { this.treatments = treatments; }
 }
