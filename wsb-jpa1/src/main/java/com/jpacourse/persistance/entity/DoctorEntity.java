@@ -30,6 +30,13 @@ public class DoctorEntity {
 	@Enumerated(EnumType.STRING)
 	private Specialization specialization;
 
+	@OneToOne(cascade = {CascadeType.PERSIST})
+	@JoinColumn(name = "address_id")
+	private AddressEntity addressEntity;
+
+	@OneToMany(mappedBy = "doctorEntity", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+	private List<VisitEntity> visits;
+
 	public Long getId() {
 		return id;
 	}
