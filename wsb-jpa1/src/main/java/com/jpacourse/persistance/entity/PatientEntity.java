@@ -36,30 +36,88 @@ public class PatientEntity {
 	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
 	private List<VisitEntity> visits;
 
-	public Long getId() { return id; }
-	public void setId(Long id) { this.id = id; }
+	@Column(nullable = false)
+	private int age = 0;
 
-	public String getFirstName() { return firstName; }
-	public void setFirstName(String firstName) { this.firstName = firstName; }
+	// Gettery i Settery
 
-	public String getLastName() { return lastName; }
-	public void setLastName(String lastName) { this.lastName = lastName; }
+	public Long getId() {
+		return id;
+	}
 
-	public String getTelephoneNumber() { return telephoneNumber; }
-	public void setTelephoneNumber(String telephoneNumber) { this.telephoneNumber = telephoneNumber; }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-	public String getEmail() { return email; }
-	public void setEmail(String email) { this.email = email; }
+	public String getFirstName() {
+		return firstName;
+	}
 
-	public String getPatientNumber() { return patientNumber; }
-	public void setPatientNumber(String patientNumber) { this.patientNumber = patientNumber; }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-	public LocalDate getDateOfBirth() { return dateOfBirth; }
-	public void setDateOfBirth(LocalDate dateOfBirth) { this.dateOfBirth = dateOfBirth; }
+	public String getLastName() {
+		return lastName;
+	}
 
-	public AddressEntity getAddress() { return address; }
-	public void setAddress(AddressEntity address) { this.address = address; }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-	public List<VisitEntity> getVisits() { return visits; }
-	public void setVisits(List<VisitEntity> visits) { this.visits = visits; }
+	public String getTelephoneNumber() {
+		return telephoneNumber;
+	}
+
+	public void setTelephoneNumber(String telephoneNumber) {
+		this.telephoneNumber = telephoneNumber;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPatientNumber() {
+		return patientNumber;
+	}
+
+	public void setPatientNumber(String patientNumber) {
+		this.patientNumber = patientNumber;
+	}
+
+	public LocalDate getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public AddressEntity getAddress() {
+		return address;
+	}
+
+	public void setAddress(AddressEntity address) {
+		this.address = address;
+	}
+
+	public List<VisitEntity> getVisits() {
+		return visits;
+	}
+
+	public void setVisits(List<VisitEntity> visits) {
+		this.visits = visits;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
 }

@@ -2,6 +2,7 @@ package com.jpacourse.persistance.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -28,21 +29,69 @@ public class VisitEntity {
 	@OneToMany(mappedBy = "visit", cascade = CascadeType.ALL)
 	private List<MedicalTreatmentEntity> treatments;
 
-	public Long getId() { return id; }
-	public void setId(Long id) { this.id = id; }
+	// === GETTERY I SETTERY ===
 
-	public String getDescription() { return description; }
-	public void setDescription(String description) { this.description = description; }
+	public Long getId() {
+		return id;
+	}
 
-	public LocalDateTime getTime() { return time; }
-	public void setTime(LocalDateTime time) { this.time = time; }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-	public DoctorEntity getDoctor() { return doctor; }
-	public void setDoctor(DoctorEntity doctor) { this.doctor = doctor; }
+	public String getDescription() {
+		return description;
+	}
 
-	public PatientEntity getPatient() { return patient; }
-	public void setPatient(PatientEntity patient) { this.patient = patient; }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-	public List<MedicalTreatmentEntity> getTreatments() { return treatments; }
-	public void setTreatments(List<MedicalTreatmentEntity> treatments) { this.treatments = treatments; }
+	public LocalDateTime getTime() {
+		return time;
+	}
+
+	public void setTime(LocalDateTime time) {
+		this.time = time;
+	}
+
+	public DoctorEntity getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(DoctorEntity doctor) {
+		this.doctor = doctor;
+	}
+
+	public PatientEntity getPatient() {
+		return patient;
+	}
+
+	public void setPatient(PatientEntity patient) {
+		this.patient = patient;
+	}
+
+	public List<MedicalTreatmentEntity> getTreatments() {
+		return treatments;
+	}
+
+	public void setTreatments(List<MedicalTreatmentEntity> treatments) {
+		this.treatments = treatments;
+	}
+
+	// === METODA POMOCNICZA ===
+	// (do użycia np. w mapperze)
+
+	public LocalDate getDate() {
+		return time != null ? time.toLocalDate() : null;
+	}
+
+	// Dodana metoda pomocnicza do wyświetlania typów leczenia
+	public void printTreatmentTypes() {
+		if (treatments != null) {
+			for (MedicalTreatmentEntity treatment : treatments) {
+				System.out.println(treatment.getType());  // Wywołanie metody getType() z klasy MedicalTreatmentEntity
+			}
+		}
+	}
 }

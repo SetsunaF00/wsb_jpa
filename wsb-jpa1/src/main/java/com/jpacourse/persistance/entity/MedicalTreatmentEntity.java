@@ -15,21 +15,51 @@ public class MedicalTreatmentEntity {
 	private String description;
 
 	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
 	private TreatmentType type;
 
 	@ManyToOne
 	@JoinColumn(name = "visit_id", nullable = false)
 	private VisitEntity visit;
 
-	public Long getId() { return id; }
-	public void setId(Long id) { this.id = id; }
+	// === GETTERY I SETTERY ===
 
-	public String getDescription() { return description; }
-	public void setDescription(String description) { this.description = description; }
+	public Long getId() {
+		return id;
+	}
 
-	public TreatmentType getType() { return type; }
-	public void setType(TreatmentType type) { this.type = type; }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-	public VisitEntity getVisit() { return visit; }
-	public void setVisit(VisitEntity visit) { this.visit = visit; }
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public TreatmentType getType() {
+		return type;
+	}
+
+	public void setType(TreatmentType type) {
+		this.type = type;
+	}
+
+	public VisitEntity getVisit() {
+		return visit;
+	}
+
+	public void setVisit(VisitEntity visit) {
+		this.visit = visit;
+	}
+
+	// === DODATKOWE METODY ===
+
+	// Przykładowa metoda do uzyskania opisu leczenia i jego typu w formacie tekstowym
+	public String getTreatmentDetails() {
+		return "Treatment: " + description + " | Type: " + (type != null ? type.name() : "Unknown");
+	}
 }
