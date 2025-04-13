@@ -1,6 +1,7 @@
 package com.jpacourse.persistance.entity;
 
 import com.jpacourse.persistance.enums.TreatmentType;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -15,14 +16,12 @@ public class MedicalTreatmentEntity {
 	private String description;
 
 	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
 	private TreatmentType type;
 
-	@ManyToOne
-	@JoinColumn(name = "visit_id", nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(nullable = false, name = "visit_id")
 	private VisitEntity visit;
 
-	// === GETTERY I SETTERY ===
 
 	public Long getId() {
 		return id;
@@ -48,18 +47,4 @@ public class MedicalTreatmentEntity {
 		this.type = type;
 	}
 
-	public VisitEntity getVisit() {
-		return visit;
-	}
-
-	public void setVisit(VisitEntity visit) {
-		this.visit = visit;
-	}
-
-	// === DODATKOWE METODY ===
-
-	// Przykładowa metoda do uzyskania opisu leczenia i jego typu w formacie tekstowym
-	public String getTreatmentDetails() {
-		return "Treatment: " + description + " | Type: " + (type != null ? type.name() : "Unknown");
-	}
 }

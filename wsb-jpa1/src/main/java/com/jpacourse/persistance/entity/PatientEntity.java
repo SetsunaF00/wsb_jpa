@@ -1,8 +1,10 @@
 package com.jpacourse.persistance.entity;
 
-import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "PATIENT")
@@ -21,6 +23,7 @@ public class PatientEntity {
 	@Column(nullable = false)
 	private String telephoneNumber;
 
+	@Column
 	private String email;
 
 	@Column(nullable = false)
@@ -28,18 +31,17 @@ public class PatientEntity {
 
 	@Column(nullable = false)
 	private LocalDate dateOfBirth;
-
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
+	//
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(nullable = false, name = "address_id", referencedColumnName = "id")
 	private AddressEntity address;
 
-	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
-	private List<VisitEntity> visits;
+	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<VisitEntity> visits = new ArrayList<>();
 
-	@Column(nullable = false)
-	private int age = 0;
-
-	// Gettery i Settery
+//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@JoinColumn(name = "Patient_idAAAAAAA")
+//	private List<AddressEntity> addressEntityList;
 
 	public Long getId() {
 		return id;
@@ -105,19 +107,4 @@ public class PatientEntity {
 		this.address = address;
 	}
 
-	public List<VisitEntity> getVisits() {
-		return visits;
-	}
-
-	public void setVisits(List<VisitEntity> visits) {
-		this.visits = visits;
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
-	}
 }

@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS address
     address_line2 VARCHAR(255),
     postal_code   VARCHAR(255),
     CONSTRAINT pk_address PRIMARY KEY (id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS doctor
 (
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS doctor
     specialization   VARCHAR(255)                            NOT NULL,
     address_id       BIGINT                                  NOT NULL,
     CONSTRAINT pk_doctor PRIMARY KEY (id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS patient
 (
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS patient
     date_of_birth    date                                    NOT NULL,
     address_id       BIGINT                                  NOT NULL,
     CONSTRAINT pk_patient PRIMARY KEY (id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS visit
 (
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS visit
     doctor_id   BIGINT,
     patient_id  BIGINT,
     CONSTRAINT pk_visit PRIMARY KEY (id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS medical_treatment
 (
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS medical_treatment
     type        VARCHAR(255),
     visit_id    BIGINT,
     CONSTRAINT pk_medical_treatment PRIMARY KEY (id)
-    );
+);
 
 -- Relacja jednostronna od strony dziecka: każda tabela doctor musi mieć adres
 ALTER TABLE doctor

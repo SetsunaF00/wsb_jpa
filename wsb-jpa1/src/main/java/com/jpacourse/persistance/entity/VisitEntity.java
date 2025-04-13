@@ -1,9 +1,14 @@
 package com.jpacourse.persistance.entity;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Table;
+import org.hibernate.annotations.*;
 
 @Entity
 @Table(name = "VISIT")
@@ -13,23 +18,23 @@ public class VisitEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(nullable = false)
 	private String description;
 
 	@Column(nullable = false)
 	private LocalDateTime time;
 
-	@ManyToOne
-	@JoinColumn(name = "doctor_id", nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(nullable = false, name = "doctor_id")
 	private DoctorEntity doctor;
 
-	@ManyToOne
-	@JoinColumn(name = "patient_id", nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(nullable = false, name = "patient_id")
 	private PatientEntity patient;
 
-	@OneToMany(mappedBy = "visit", cascade = CascadeType.ALL)
-	private List<MedicalTreatmentEntity> treatments;
+	@OneToMany( mappedBy = "visit", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY )
+	private Collection<MedicalTreatmentEntity> treatments = new ArrayList<>();
 
-	// === GETTERY I SETTERY ===
 
 	public Long getId() {
 		return id;
@@ -63,35 +68,20 @@ public class VisitEntity {
 		this.doctor = doctor;
 	}
 
-	public PatientEntity getPatient() {
-		return patient;
-	}
 
-	public void setPatient(PatientEntity patient) {
-		this.patient = patient;
-	}
-
-	public List<MedicalTreatmentEntity> getTreatments() {
-		return treatments;
-	}
-
-	public void setTreatments(List<MedicalTreatmentEntity> treatments) {
+	public void setTreatments(Collection<MedicalTreatmentEntity> treatments) {
 		this.treatments = treatments;
 	}
 
-	// === METODA POMOCNICZA ===
-	// (do użycia np. w mapperze)
-
-	public LocalDate getDate() {
-		return time != null ? time.toLocalDate() : null;
+	public void addTreatment(MedicalTreatmentEntity treatment) {
+		treatments.add(treatment);
 	}
 
-	// Dodana metoda pomocnicza do wyświetlania typów leczenia
-	public void printTreatmentTypes() {
-		if (treatments != null) {
-			for (MedicalTreatmentEntity treatment : treatments) {
-				System.out.println(treatment.getType());  // Wywołanie metody getType() z klasy MedicalTreatmentEntity
-			}
-		}
+	public void removeTreatment(MedicalTreatmentEntity treatment) {
+		treatments.remove(treatment);
 	}
+
+	public PatientEntity getPatient(PatientEntity patient) { return patient; }
+
+	public void setPatient(PatientEntity patient) { this.patient = patient; }
 }

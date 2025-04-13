@@ -1,31 +1,41 @@
 package com.jpacourse.dto;
-
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 
 public class PatientTO {
     private Long id;
     private String firstName;
     private String lastName;
-    private String email;
     private String telephoneNumber;
+    private String email;
     private String patientNumber;
     private LocalDate dateOfBirth;
-    private int age; // odwzorowanie nowego pola
-    private List<VisitTO> visits;
 
-    public PatientTO(Long id, String firstName, String lastName, String email,
-                     String telephoneNumber, String patientNumber,
-                     LocalDate dateOfBirth, int age, List<VisitTO> visits) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.telephoneNumber = telephoneNumber;
-        this.patientNumber = patientNumber;
-        this.dateOfBirth = dateOfBirth;
-        this.age = age;
-        this.visits = visits;
-    }
+    public Long getId() { return id; }
 
+    public void setId(Long id) { this.id = id; }
+
+    public String getFirstName() { return firstName; }
+
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+
+    public String getLastName() { return lastName; }
+
+    public void setLastName(String lastName) { this.lastName = lastName; }
+
+    public String getTelephoneNumber() { return telephoneNumber; }
+
+    public void setTelephoneNumber(String telephoneNumber) { this.telephoneNumber = telephoneNumber; }
+
+    public String getEmail() { return email; }
+
+    public void setEmail(String email) { this.email = email; }
+
+    public String getPatientNumber() { return patientNumber; }
+
+    public void setPatientNumber(String patientNumber) { this.patientNumber = patientNumber; }
+
+    public LocalDate getDateOfBirth() { return dateOfBirth; }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) { this.dateOfBirth = dateOfBirth; }
 }

@@ -1,16 +1,14 @@
-package com.jpacourse.rest;
+package com.jpacourse.rest.exception;
 
-import com.jpacourse.service.PatientService;
+
 import com.jpacourse.dto.PatientTO;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import com.jpacourse.service.PatientService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/patients")
-public class PatientController {
+class PatientController {
 
     private final PatientService patientService;
 
@@ -18,18 +16,14 @@ public class PatientController {
         this.patientService = patientService;
     }
 
-    @GetMapping
-    public List<PatientTO> getAllPatients() {
-        return patientService.getAllPatients();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<PatientTO> getPatientById(@PathVariable Long id) {
-        PatientTO patient = patientService.getPatientById(id);
-        if (patient != null) {
-            return new ResponseEntity<>(patient, HttpStatus.OK);
+    @GetMapping("/patient/{id}")
+    public PatientTO findById(@PathVariable Long id) {
+        final PatientTO patient = patientService.findById(id);
+        if(patient != null) {
+            return patient;
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new EntityNotFoundException(id);
         }
+
     }
 }
