@@ -1,17 +1,15 @@
 package com.jpacourse.dto;
 
-public class MedicalTreatmentTO {
+import java.io.Serializable;
+
+import com.jpacourse.persistance.enums.TreatmentType;
+
+public class MedicalTreatmentTO implements Serializable {
     private Long id;
     private String description;
-    private String type;  // Zmieniony na String, bo typ w `MedicalTreatmentTO` powinien być tekstowy
+    private TreatmentType type;
+    private Long visitId;
 
-    public MedicalTreatmentTO(Long id, String description, String type) {
-        this.id = id;
-        this.description = description;
-        this.type = type;
-    }
-
-    // Gettery i Settery
     public Long getId() {
         return id;
     }
@@ -28,11 +26,19 @@ public class MedicalTreatmentTO {
         this.description = description;
     }
 
-    public String getType() {
+    public TreatmentType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(TreatmentType type) {
         this.type = type;
+    }
+
+    public Long getVisitId() {
+        return visitId;
+    }
+
+    public void setVisitId(Long visitId) {
+        this.visitId = visitId;
     }
 }

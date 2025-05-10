@@ -26,22 +26,28 @@ public class PatientEntity {
 	@Column
 	private String email;
 
-	@Column(nullable = false)
+	@Column
 	private String patientNumber;
 
 	@Column(nullable = false)
 	private LocalDate dateOfBirth;
-	//
+
+	@Column(name = "registration_date")
+	private LocalDate registrationDate;
+
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(nullable = false, name = "address_id", referencedColumnName = "id")
+	@JoinColumn(name = "address_id", referencedColumnName = "id")
 	private AddressEntity address;
 
 	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<VisitEntity> visits = new ArrayList<>();
 
-//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	@JoinColumn(name = "Patient_idAAAAAAA")
-//	private List<AddressEntity> addressEntityList;
+	@Version
+	private int version;
+
+	// @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	// //@Fetch(FetchMode.JOIN)
+	// private List<VisitEntity> visits = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -107,4 +113,27 @@ public class PatientEntity {
 		this.address = address;
 	}
 
+	public List<VisitEntity> getVisits() {
+		return visits;
+	}
+
+	public void setVisits(List<VisitEntity> visits) {
+		this.visits = visits;
+	}
+
+	public LocalDate getRegistrationDate() {
+		return registrationDate;
+	}
+
+	public void setRegistrationDate(LocalDate registrationDate) {
+		this.registrationDate = registrationDate;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
 }

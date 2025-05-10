@@ -1,11 +1,23 @@
 package com.jpacourse.persistance.entity;
 
-import com.jpacourse.persistance.enums.Specialization;
-
-import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.jpacourse.persistance.enums.Specialization;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "DOCTOR")
@@ -35,19 +47,11 @@ public class DoctorEntity {
 	private Specialization specialization;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(nullable = false, name = "address_id", referencedColumnName = "id")
+	@JoinColumn(name = "address_id", referencedColumnName = "id")
 	private AddressEntity address;
 
 	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<VisitEntity> visits = new ArrayList<>();
-
-
-//	@OneToMany(cascade = {CascadeType.PERSIST})
-//	@JoinColumn(name = 'address_id')
-//	private AddressEntity addressEntity;
-//
-//	@OneToMany(mappedBy = 'doctorEntity', cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-//	private List<VisitEntity> visits;
 
 	public Long getId() {
 		return id;
@@ -105,7 +109,6 @@ public class DoctorEntity {
 		this.specialization = specialization;
 	}
 
-
 	public AddressEntity getAddress() {
 		return address;
 	}
@@ -114,4 +117,11 @@ public class DoctorEntity {
 		this.address = address;
 	}
 
+	public List<VisitEntity> getVisits() {
+		return visits;
+	}
+
+	public void setVisits(List<VisitEntity> visits) {
+		this.visits = visits;
+	}
 }
